@@ -30,6 +30,8 @@ async function run() {
     await client.connect();
 
     const craftCollection = client.db("craftDB").collection("craft");
+    const artistCollection = client.db("craftDB").collection("artist");
+    const blogCollection = client.db("craftDB").collection("blog");
 
     // Create
     app.post("/craft", async (req, res) => {
@@ -39,9 +41,21 @@ async function run() {
       res.send(result);
     });
 
-    // Read
+    // Read Craft
     app.get("/craft", async (req, res) => {
       const cursor = craftCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    // Read Artist
+    app.get("/artist", async (req, res) => {
+      const cursor = artistCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    // Read Blog
+    app.get("/blog", async (req, res) => {
+      const cursor = blogCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
