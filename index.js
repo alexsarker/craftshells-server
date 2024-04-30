@@ -75,12 +75,37 @@ async function run() {
       const result = await craftCollection.findOne(query);
       res.send(result);
     });
+
     // Update
-    // app.put("/craft/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const updateCraft = req.body;
-    //   console.log(id, updateCraft);
-    // });
+    app.put("/craft/:id", async (req, res) => {
+      const id = req.params.id;
+      const getCraft = req.body;
+      console.log(id, getCraft);
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedCraft = {
+        $set: {
+          photoURL: getCraft.photoURL,
+          name: getCraft.name,
+          subcategory: getCraft.subcategory,
+          description: getCraft.description,
+          price: getCraft.price,
+          rating: getCraft.rating,
+          customization: getCraft.customization,
+          processingTime: getCraft.processingTime,
+          stockStatus: getCraft.stockStatus,
+          artistName: getCraft.artistName,
+          artistEmail: getCraft.artistEmail,
+        },
+      };
+
+      const result = await craftCollection.updateOne(
+        filter,
+        updatedCraft,
+        options
+      );
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
