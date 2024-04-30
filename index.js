@@ -75,6 +75,12 @@ async function run() {
       const result = await craftCollection.findOne(query);
       res.send(result);
     });
+    // Update
+    // app.put("/craft/:id", async (req, res) => {
+    //   const id = req.params.id;
+    //   const updateCraft = req.body;
+    //   console.log(id, updateCraft);
+    // });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
